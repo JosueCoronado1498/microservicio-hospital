@@ -1,0 +1,65 @@
+# === Java / Maven ===
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.log
+hs_err_pid*
+replay_pid*
+
+# === IntelliJ IDEA ===
+.idea/
+*.iws
+*.ipr
+out/
+
+# === VS Code ===
+.vscode/
+
+# === Sistema operativo ===
+.DS_Store
+Thumbs.db
+
+# === Spring Boot ===
+*.env
+application-*.yml
+application-*.properties
+!application.yml
+!application.properties
+
+# === Docker ===
+**/tmp/
+**/logs/
+**/.docker/
+**/docker-data/
+**/docker-compose.override.yml
+
+# === Archivos de entorno ===
+.env
+.env.*
+
+# === Archivos de configuración específicos ===
+*.swp
+*.bak
+*.tmp
+*.old
+
+# === Archivos generados por compilación o empaquetado ===
+*.zip
+*.tar
+*.tar.gz
+
+# === Node (por si agregás frontends más adelante) ===
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# === Configuración del sistema / IDE ===
+*.classpath
+*.project
+*.settings/
+bin/
+build/
