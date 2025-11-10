@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  pacientes_db:
+    container_name: pacientes_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${PACIENTES_USER}
+      POSTGRES_PASSWORD: ${PACIENTES_PASS}
+      POSTGRES_DB: ${PACIENTES_DB}
+      TZ: UTC
+    volumes:
+      - pacientes_data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  turnos_db:
+    container_name: turnos_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${TURNOS_USER}
+      POSTGRES_PASSWORD: ${TURNOS_PASS}
+      POSTGRES_DB: ${TURNOS_DB}
+      TZ: UTC
+    volumes:
+      - turnos_data:/var/lib/postgresql
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+
+  pacientes:
+    build: ./pacientes
+    container_name: pacientes_app
+    depends_on:
+      - pacientes_db
+    env_file:
+      - ./pacientes/.env
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  turnos:
+    build: ./turnos
+    container_name: turnos_app
+    depends_on:
+      - turnos_db
+    env_file:
+      - ./turnos/.env
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  pacientes_data:
+  turnos_data:
+
+networks:
+  backend:
+    driver: bridge
+
+
