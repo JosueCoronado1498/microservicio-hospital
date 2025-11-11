@@ -1,5 +1,6 @@
 package com.jcoronado.turnos.controller;
 
+import com.jcoronado.turnos.dto.TurnoDTO;
 import com.jcoronado.turnos.model.Turno;
 import com.jcoronado.turnos.service.ITurnoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,15 @@ public class TurnoController {
 
     //Crear un nuevo turno
     @PostMapping("/crear")
-    public String crearTurno(@RequestBody LocalDate fecha,
-                             @RequestBody String tratamiento,
-                             @RequestBody String dniPaciente){
-        turnoServ.saveTurno(fecha, tratamiento, dniPaciente);
+    public String crearTurno(@RequestBody TurnoDTO turno){
+        turnoServ.saveTurno(turno.getFecha(), turno.getTratamiento(), turno.getDniPaciente());
 
         return "El turno se creo correctamente";
     }
 
     @GetMapping("/traer")
     public List<Turno> traerTurnos(){
+
         return turnoServ.getTurnos();
     }
 

@@ -33,7 +33,7 @@ services:
 
   pacientes:
     build: ./pacientes
-    container_name: pacientes_app
+    container_name: pacientes-app
     depends_on:
       - pacientes_db
     env_file:

@@ -32,9 +32,10 @@ public class PacienteController {
         return "El paciente se elimino correctamente";
     }
 
-    @GetMapping("/pacientes/traer/{id}")
-    public Paciente traerPacientePorId(@PathVariable Long id){
-        return pacienteServ.findPaciente(id);
+    @GetMapping("/pacientes/traerdni/{dni}")
+    public Paciente traerPacientePorDni(@PathVariable("dni") String dni){
+
+        return pacienteServ.findPacienteByDni(dni);
     }
 
     @PutMapping("/pacientes/editar/{id_original}")

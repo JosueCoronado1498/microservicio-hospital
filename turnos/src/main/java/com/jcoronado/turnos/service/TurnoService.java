@@ -5,6 +5,7 @@ import com.jcoronado.turnos.model.Turno;
 import com.jcoronado.turnos.repository.ITurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,8 +16,12 @@ public class TurnoService implements ITurnoService {
     @Autowired
     private ITurnoRepository turnoRepo;
 
+    @Autowired
+    private RestTemplate apiConsumir;
+
     @Override
     public List<Turno> getTurnos() {
+
         return turnoRepo.findAll();
     }
 
@@ -24,13 +29,13 @@ public class TurnoService implements ITurnoService {
     @Override
     public void saveTurno(LocalDate fecha, String tratamiento, String dniPaciente) {
         //buscar el paciente en la api pacientes
-        //Paciente pac = buscar en la api
-        //String nombreCompletoPaciente = lo que consumo de nombre de la api
+        Paciente pac = apiConsumir.getForObject("http://pacientes-app:8080/pacientes/traerdni/"+dniPaciente, Paciente.class);
+        String nombreCompletoPaciente = pac.getNombre() + "" + pac.getApellido();
 
         Turno turn = new Turno();
         turn.setFecha(fecha);
         turn.setTratamiento(tratamiento);
-        //turn.setNombreCompletoPaciente();
+        turn.setNombreCompletoPaciente(nombreCompletoPaciente);
 
         turnoRepo.save(turn);
 
